@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_04_153039) do
+ActiveRecord::Schema.define(version: 2020_11_04_154253) do
 
   create_table "owners", force: :cascade do |t|
     t.string "username"
@@ -22,6 +22,9 @@ ActiveRecord::Schema.define(version: 2020_11_04_153039) do
     t.string "token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "owner_id", null: false
+    t.index ["owner_id"], name: "index_rooms_on_owner_id"
   end
 
+  add_foreign_key "rooms", "owners"
 end
