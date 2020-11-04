@@ -23,17 +23,17 @@ ActiveRecord::Schema.define(version: 2020_11_04_164615) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "owner_id", null: false
-    t.integer "visitor_id", null: false
     t.index ["owner_id"], name: "index_rooms_on_owner_id"
-    t.index ["visitor_id"], name: "index_rooms_on_visitor_id"
   end
 
   create_table "visitors", force: :cascade do |t|
     t.string "username"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "room_id", null: false
+    t.index ["room_id"], name: "index_visitors_on_room_id"
   end
 
   add_foreign_key "rooms", "owners"
-  add_foreign_key "rooms", "visitors"
+  add_foreign_key "visitors", "rooms"
 end
