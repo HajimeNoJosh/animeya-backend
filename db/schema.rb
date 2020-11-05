@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_04_164615) do
+ActiveRecord::Schema.define(version: 2020_11_04_191741) do
 
   create_table "owners", force: :cascade do |t|
     t.string "username"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_164615) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "owner_id", null: false
+    t.boolean "visitors_joined"
     t.index ["owner_id"], name: "index_rooms_on_owner_id"
   end
 
