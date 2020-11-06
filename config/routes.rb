@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   post 'room', to:'rooms#create'
   get 'visitor', to: 'visitors#index'
   post 'owner', to: 'owners#create'
+  post 'visitor', to: 'visitors#create'
 end
