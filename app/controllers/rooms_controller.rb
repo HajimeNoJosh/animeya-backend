@@ -6,8 +6,10 @@ class RoomsController < ApplicationController
     end
 
     def show
-        room = Room.find_by(token: params[:token])
-        render json: room
+        qry = Jikan::Query.new
+        results = qry.search(:anime)
+        # room = Room.find_by(token: params[:token])
+        render json: results
 
     end
 end
