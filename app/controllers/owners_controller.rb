@@ -22,6 +22,16 @@ class OwnersController < ApplicationController
 
     end
 
+    def update
+        @owner = Owner.find_by(id: params[:id])
+      
+        @owner.update(owner_params)
+        if @owner.save
+            redirect_to @owner
+        else
+            render "new"
+        end
+      end
 
 
     private
@@ -31,3 +41,4 @@ class OwnersController < ApplicationController
     end
 
 end
+

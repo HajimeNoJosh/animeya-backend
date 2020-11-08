@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   post 'visitor', to: 'visitors#create'
   get 'visitor/:id', to: 'visitors#show'
   get 'room/:token', to: 'rooms#show'
+  patch 'owner/:id', to: 'owners#update'
 end
