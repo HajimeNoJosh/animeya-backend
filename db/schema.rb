@@ -10,15 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_04_191741) do
+ActiveRecord::Schema.define(version: 2020_11_10_180221) do
 
-  create_table "owners", force: :cascade do |t|
-    t.string "username"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "rooms", force: :cascade do |t|
+  create_table "Rooms", force: :cascade do |t|
     t.string "token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -27,14 +21,34 @@ ActiveRecord::Schema.define(version: 2020_11_04_191741) do
     t.index ["owner_id"], name: "index_rooms_on_owner_id"
   end
 
+  create_table "owners", force: :cascade do |t|
+    t.string "username"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "token"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "right_swipe"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "visitor_id", null: false
+    t.integer "owner_id", null: false
+    t.index ["owner_id"], name: "index_users_on_owner_id"
+    t.index ["visitor_id"], name: "index_users_on_visitor_id"
+  end
+
   create_table "visitors", force: :cascade do |t|
     t.string "username"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "room_id", null: false
+    t.string "token"
     t.index ["room_id"], name: "index_visitors_on_room_id"
   end
 
-  add_foreign_key "rooms", "owners"
+  add_foreign_key "Rooms", "owners"
+  add_foreign_key "users", "owners"
+  add_foreign_key "users", "visitors"
   add_foreign_key "visitors", "rooms"
 end

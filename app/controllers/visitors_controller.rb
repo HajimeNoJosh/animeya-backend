@@ -2,7 +2,7 @@ class VisitorsController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        visitors = Visitor.all.select(:id, :username, :room_id)
+        visitors = Visitor.all.select(:id, :username, :room_id, :token)
         render json:  visitors
     end
 
@@ -12,9 +12,10 @@ class VisitorsController < ApplicationController
     end
 
     def create
-        token = params[:token]
-        @room = Room.find_by(token: token)
-        @visitor = Visitor.create(username: params[:username], room_id: @room.id)
+        visitor_token = SecureRandom.alphanumeric
+        room_token = params[:token]
+        @room = Room.find_by(token: room_token)
+        @visitor = Visitor.create(username: params[:username], token: visitor_token, room_id: @room.id)
         
         if @visitor.save
           @room.update(visitors_joined: true)

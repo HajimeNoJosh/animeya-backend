@@ -2,16 +2,17 @@ class OwnersController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        owners = Owner.all.select(:id, :username)
+        owners = Owner.all.select(:id, :username, :token)
         render json: owners
     end
 
     def create
-        @owner = Owner.create(owner_params)
+        owner_token = SecureRandom.alphanumeric
+        @owner = Owner.create(username: params[:username], token: owner_token)
 
         if @owner.save
-            token = SecureRandom.alphanumeric
-            @room = Room.create(token: token, owner_id: @owner.id)
+            room_token = SecureRandom.alphanumeric
+            @room = Room.create(token: room_token, owner_id: @owner.id)
             success = true if @room.save
         end
         if success 
