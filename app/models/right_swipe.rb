@@ -1,0 +1,2 @@
+class RightSwipe < ApplicationRecord
+end

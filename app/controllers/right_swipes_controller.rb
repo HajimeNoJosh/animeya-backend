@@ -1,0 +1,2 @@
+class RightSwipesController < ApplicationController
+end

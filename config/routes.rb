@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :right_swipes
   resources :visitors
   get 'owner', to: 'owners#index'
   get 'room', to: 'rooms#index'
