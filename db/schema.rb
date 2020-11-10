@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_10_180221) do
+ActiveRecord::Schema.define(version: 2020_11_10_194622) do
 
   create_table "Rooms", force: :cascade do |t|
     t.string "token"
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(version: 2020_11_10_180221) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "token"
+  end
+
+  create_table "right_swipes", force: :cascade do |t|
+    t.string "user_token"
+    t.integer "anime_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "room_id", null: false
+    t.index ["room_id"], name: "index_right_swipes_on_room_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -48,6 +57,7 @@ ActiveRecord::Schema.define(version: 2020_11_10_180221) do
   end
 
   add_foreign_key "Rooms", "owners"
+  add_foreign_key "right_swipes", "rooms"
   add_foreign_key "users", "owners"
   add_foreign_key "users", "visitors"
   add_foreign_key "visitors", "rooms"
