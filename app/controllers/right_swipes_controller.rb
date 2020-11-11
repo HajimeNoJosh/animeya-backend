@@ -2,26 +2,53 @@ class RightSwipesController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        right_swipes = RightSwipe.all.select(:id, :room_token, :user_token, :anime_id)
+        right_swipes = RightSwipe.all.select(:id, :room_id, :user_token, :anime_id)
         render json: right_swipes
     end
 
     def create
-        @right_swipe = RightSwipe.create(room_token: params[:room_token], 
-                                         user_token: params[:user_token], 
-                                         anime_id: params[:anime_id])
+        room_id = params[:room_id]
+        user_token = params[:user_token]
+        anime_id = params[:anime_id]
+        @swipes_by_room_id = RightSwipe.where(room_id: room_id)
+        should_create = false
+        is_matched = false
 
-        if @right_swipe.save
-            p 'created'
-         else
-            render "new"
-         end
+        @swipes_by_room_id.each do |attr_name|
+            if attr_name.user_token == user_token && attr_name.anime_id != anime_id
+                should_create = true
+            elsif attr_name.user_token != user_token && attr_name.anime_id != anime_id
+                should_create = true
+            elsif attr_name.user_token != user_token && attr_name.anime_id == anime_id
+                should_create = true
+                is_matched = true
+            else
+                should_create = false
+            end
+        end
+        if @swipes_by_room_id.length == 0
+            should_create = true 
+        end
 
+        if should_create
+            @right_swipe = RightSwipe.create(room_id: room_id, 
+            user_token: user_token, 
+            anime_id: anime_id)
+            success = true if @right_swipe.save
+        end
+
+        if is_matched
+            render plain: 'matched'
+        elsif success
+            render plain: 'created'
+        else
+            render plain: 'could not create'
+        end
     end
 
     private
 
     def owner_params
-        params.require(:right_swipe).permit(:room_token, :user_token, :anime_id)
+        params.require(:right_swipe).permit(:room_id, :user_token, :anime_id)
     end
 end

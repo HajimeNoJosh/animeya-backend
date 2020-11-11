@@ -19,8 +19,7 @@ class OwnersController < ApplicationController
             redirect_to @owner 
          else
             render "new"
-         end
-
+        end
     end
 
     def update
