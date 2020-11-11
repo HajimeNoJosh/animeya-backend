@@ -14,20 +14,25 @@ class RightSwipesController < ApplicationController
         should_create = false
         is_matched = false
 
-        @swipes_by_room_id.each do |attr_name|
-            if attr_name.user_token == user_token && attr_name.anime_id != anime_id
-                should_create = true
-            elsif attr_name.user_token != user_token && attr_name.anime_id != anime_id
-                should_create = true
-            elsif attr_name.user_token != user_token && attr_name.anime_id == anime_id
-                should_create = true
-                is_matched = true
-            else
-                should_create = false
-            end
-        end
+       
+
         if @swipes_by_room_id.length == 0
-            should_create = true 
+            should_create = true
+        else
+            @swipes_by_room_id.each do |attr_name|
+                match_token = attr_name.user_token == user_token
+                match_anime_id = attr_name.anime_id == anime_id
+                if match_token && !match_anime_id
+                    should_create = true
+                elsif !match_token && !match_anime_id
+                    should_create = true
+                elsif !match_token && match_anime_id
+                    should_create = true
+                    is_matched = true
+                else
+                    should_create = false
+                end
+            end
         end
 
         if should_create

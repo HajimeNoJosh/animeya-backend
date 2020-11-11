@@ -29,7 +29,6 @@ class VisitorsController < ApplicationController
     end
 
     def visitor_params
-
         params.require(:visitor).permit(:username, :token)
     end
 end
