@@ -16,7 +16,7 @@ class OwnersController < ApplicationController
             success = true if @room.save
         end
         if success 
-            redirect_to @owner 
+            redirect_to @room
          else
             render "new"
         end
