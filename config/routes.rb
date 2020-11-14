@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :right_swipes
   resources :visitors
+  resources :rooms
+  resources :owners
   get 'owner', to: 'owners#index'
   get 'room', to: 'rooms#index'
   post 'room', to:'rooms#create'
@@ -10,6 +12,7 @@ Rails.application.routes.draw do
   get 'visitor/:id', to: 'visitors#show'
   get 'room/:token', to: 'rooms#show'
   patch 'owner/:id', to: 'owners#update'
+  get 'owner/:id', to: 'owners#show'
   get 'right_swipe', to:'right_swipes#index'
   post 'right_swipe', to: 'right_swipes#create'
 end

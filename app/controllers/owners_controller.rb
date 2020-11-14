@@ -6,6 +6,11 @@ class OwnersController < ApplicationController
         render json: owners
     end
 
+    def show
+        owner = Owner.find(params[:id])
+        render json: owner
+    end
+
     def create
         owner_token = SecureRandom.alphanumeric
         @owner = Owner.create(username: params[:username], token: owner_token)
@@ -15,8 +20,9 @@ class OwnersController < ApplicationController
             @room = Room.create(token: room_token, owner_id: @owner.id)
             success = true if @room.save
         end
+
         if success 
-            redirect_to @room
+            redirect_to @owner
          else
             render "new"
         end

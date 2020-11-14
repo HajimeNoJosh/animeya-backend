@@ -1,8 +1,13 @@
 class RoomsController < ApplicationController
     skip_before_action :verify_authenticity_token
     def index
-        room = Room.find(params[:format])
-        render json:  room
+        rooms = Room.all.select(:id, :visitors_joined, :owner_id, :token)
+        render json: rooms
+    end
+    
+    def find_one
+        room = Room.find(params[:owner_id])
+        render json: room
     end
 
     def show
