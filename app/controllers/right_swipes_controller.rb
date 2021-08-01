@@ -14,8 +14,6 @@ class RightSwipesController < ApplicationController
         should_create = false
         is_matched = false
 
-       
-
         if @swipes_by_room_id.length == 0
             should_create = true
         else
@@ -36,18 +34,21 @@ class RightSwipesController < ApplicationController
         end
 
         if should_create
-            @right_swipe = RightSwipe.create(room_id: room_id, 
-            user_token: user_token, 
-            anime_id: anime_id)
+            @right_swipe = RightSwipe.create(room_id: params[:room_id], 
+            user_token: params[:user_token], 
+            anime_id: params[:anime_id])
             success = true if @right_swipe.save
         end
 
         if is_matched
             render plain: 'matched'
+            ActionCable.server.broadcast "room_channel_#{room_id}", {message: "matched", anime_id: anime_id}
         elsif success
             render plain: 'created'
+            ActionCable.server.broadcast "room_channel_#{room_id}", message: "created"
         else
             render plain: 'could not create'
+            ActionCable.server.broadcast "room_channel_#{room_id}", message: "matched"
         end
     end
 

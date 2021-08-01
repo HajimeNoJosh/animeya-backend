@@ -11,6 +11,11 @@ class OwnersController < ApplicationController
         render json: owner
     end
 
+    def show_room
+        room = Room.find_by(owner_id: params[:id])
+        render json: room
+    end
+
     def create
         owner_token = SecureRandom.alphanumeric
         @owner = Owner.create(username: params[:username], token: owner_token)

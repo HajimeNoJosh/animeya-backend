@@ -11,6 +11,11 @@ class VisitorsController < ApplicationController
         render json: visitor
     end
 
+    def find_visitors_by_room
+        visitor = Visitor.where(room_id: params[:room_id])
+        render json: visitor
+    end
+
     def create
         visitor_token = SecureRandom.alphanumeric
         room_token = params[:token]

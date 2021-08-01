@@ -6,7 +6,7 @@ class RoomsController < ApplicationController
     end
     
     def find_one
-        room = Room.find(params[:owner_id])
+        room = Room.find_by(token: params[:token])
         render json: room
     end
 
@@ -15,6 +15,5 @@ class RoomsController < ApplicationController
         results = qry.search(:anime)
         # room = Room.find_by(token: params[:token])
         render json: results
-
     end
 end
