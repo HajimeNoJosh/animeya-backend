@@ -12,7 +12,7 @@ class RoomsController < ApplicationController
 
     def show
         qry = Jikan::Query.new
-        results = qry.search(:anime)
+        results = HTTParty.get('https://api.jikan.moe/v4/anime')
         # room = Room.find_by(token: params[:token])
         render json: results
     end
