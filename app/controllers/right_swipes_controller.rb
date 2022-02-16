@@ -54,7 +54,7 @@ class RightSwipesController < ApplicationController
 
     private
 
-    def owner_params
+    def right_swipe_params
         params.require(:right_swipe).permit(:room_id, :user_token, :anime_id)
     end
 end

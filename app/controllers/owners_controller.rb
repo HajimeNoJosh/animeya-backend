@@ -2,7 +2,7 @@ class OwnersController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        owners = Owner.all.select(:id, :username, :token)
+        owners = Owner.all.select(:id, :username, :token, :status)
         render json: owners
     end
 
@@ -35,21 +35,29 @@ class OwnersController < ApplicationController
 
     def update
         @owner = Owner.find_by(id: params[:id])
-      
+    
         @owner.update(owner_params)
         if @owner.save
             redirect_to @owner
         else
             render "new"
         end
-      end
+    end
 
+    def update_status
+        owner = Owner.find_by(token: params[:user_token])
+        owner.update(status: params[:status])
+        if owner.save
+            ActionCable.server.broadcast "room_channel_#{params[:room_id]}", {message: "someone_finished"}
+        else
+            render "new"
+        end
+    end
 
     private
 
     def owner_params
-        params.require(:owner).permit(:username)
+        params.require(:owner).permit(:username, :status, :token)
     end
-
 end
 

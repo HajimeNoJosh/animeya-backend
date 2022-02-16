@@ -2,7 +2,7 @@ class VisitorsController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        visitors = Visitor.all.select(:id, :username, :room_id, :token)
+        visitors = Visitor.all.select(:id, :username, :room_id, :token, :status)
         render json:  visitors
     end
 
@@ -33,7 +33,18 @@ class VisitorsController < ApplicationController
          end
     end
 
+    def update
+        visitor = Visitor.find_by(token: params[:token])
+        visitor.update(status: params[:status])
+        if visitor.save
+            redirect_to visitor
+            ActionCable.server.broadcast "room_channel_#{room_id}", {message: "someone_finished"}
+        else
+            render "new"
+        end
+    end
+
     def visitor_params
-        params.require(:visitor).permit(:username, :token)
+        params.require(:visitor).permit(:username, :token, :status)
     end
 end
