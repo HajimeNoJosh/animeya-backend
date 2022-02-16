@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get 'visitor/:id', to: 'visitors#show'
   get 'visitor/room/:room_id', to: 'visitors#find_visitors_by_room'
   post 'visitor', to: 'visitors#create'
-  patch 'update_visitor_status', to: 'visitors#update'
+  patch 'update_visitor_status', to: 'visitors#update_status'
 
 
   get 'right_swipe', to:'right_swipes#index'

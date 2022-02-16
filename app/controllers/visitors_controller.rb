@@ -33,12 +33,11 @@ class VisitorsController < ApplicationController
          end
     end
 
-    def update
-        visitor = Visitor.find_by(token: params[:token])
+    def update_status
+        visitor = Visitor.find_by(token: params[:user_token])
         visitor.update(status: params[:status])
         if visitor.save
-            redirect_to visitor
-            ActionCable.server.broadcast "room_channel_#{room_id}", {message: "someone_finished"}
+            ActionCable.server.broadcast "room_channel_#{params[:room_id]}", {message: "someone_finished"}
         else
             render "new"
         end
