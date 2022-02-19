@@ -6,6 +6,13 @@ class RightSwipesController < ApplicationController
         render json: right_swipes
     end
 
+    def get_rooms_liked_anime
+        room_id = params[:room_id]
+        puts room_id
+        right_swipes = RightSwipe.where(room_id: room_id)
+        render json: right_swipes
+    end
+
     def create
         room_id = params[:room_id]
         user_token = params[:user_token]

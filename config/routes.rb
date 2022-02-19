@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
 
   get 'right_swipe', to:'right_swipes#index'
+  get 'get_all_right_swipes/:room_id', to:'right_swipes#get_rooms_liked_anime'
   post 'right_swipe', to: 'right_swipes#create'
 
   mount ActionCable.server => '/cable'
