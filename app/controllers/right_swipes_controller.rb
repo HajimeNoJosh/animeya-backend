@@ -2,13 +2,12 @@ class RightSwipesController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        right_swipes = RightSwipe.all.select(:id, :room_id, :user_token, :anime_id)
+        right_swipes = RightSwipe.all.select(:id, :room_id, :user_token, :anime_id, :score, :image, :anime_title)
         render json: right_swipes
     end
 
     def get_rooms_liked_anime
         room_id = params[:room_id]
-        puts room_id
         right_swipes = RightSwipe.where(room_id: room_id)
         render json: right_swipes
     end
@@ -17,6 +16,10 @@ class RightSwipesController < ApplicationController
         room_id = params[:room_id]
         user_token = params[:user_token]
         anime_id = params[:anime_id]
+        score = params[:score]
+        anime_title = params[:anime_title]
+        image = params[:image]
+
         @swipes_by_room_id = RightSwipe.where(room_id: room_id)
         should_create = false
         is_matched = false
@@ -43,7 +46,10 @@ class RightSwipesController < ApplicationController
         if should_create
             @right_swipe = RightSwipe.create(room_id: params[:room_id], 
             user_token: params[:user_token], 
-            anime_id: params[:anime_id])
+            anime_id: params[:anime_id],
+            score: params[:score],
+            anime_title: params[:anime_title],
+            image: params[:image])
             success = true if @right_swipe.save
         end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_16_023729) do
+ActiveRecord::Schema.define(version: 2022_02_20_183041) do
 
   create_table "Rooms", force: :cascade do |t|
     t.string "token"
@@ -35,6 +35,9 @@ ActiveRecord::Schema.define(version: 2022_02_16_023729) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "room_id", null: false
+    t.string "anime_title"
+    t.string "score"
+    t.string "image"
     t.index ["room_id"], name: "index_right_swipes_on_room_id"
   end
 
