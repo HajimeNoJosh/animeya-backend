@@ -6,7 +6,10 @@
   "author": "Josh Martin <josh.martin@visiblebody.com>",
   "license": "MIT",
   "dependencies": {
-    "@rails/webpacker": "4.3.0"
+    "@rails/activestorage": "^7.0.2-2",
+    "@rails/ujs": "^7.0.2-2",
+    "@rails/webpacker": "^5.4.3",
+    "turbolinks": "^5.2.0"
   },
   "devDependencies": {
     "webpack-dev-server": "^4.7.4"
