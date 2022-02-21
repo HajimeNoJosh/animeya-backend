@@ -1,0 +1,8 @@
+{
+  "name": "animeya-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:HajimeNoJosh/animeya-backend.git",
+  "author": "Josh Martin <josh.martin@visiblebody.com>",
+  "license": "MIT"
+}
