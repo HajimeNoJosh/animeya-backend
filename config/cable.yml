@@ -6,5 +6,5 @@ test:
 
 production:
   adapter: redis
-  url: redistogo-flexible-13091
+  url: redis://redistogo:19eeaed6f1ab79d00b2fb9ab4bdc3f02@sole.redistogo.com:10511/
   channel_prefix: animeya_backend_production
